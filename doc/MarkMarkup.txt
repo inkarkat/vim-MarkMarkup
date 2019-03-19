@@ -1,0 +1,121 @@
+*MarkMarkup.txt*        Convert mark.vim highlighting to markup inside the text.
+
+			MARK MARKUP    by Ingo Karkat
+							      *MarkMarkup.vim*
+description			|MarkMarkup-description|
+usage				|MarkMarkup-usage|
+installation			|MarkMarkup-installation|
+configuration			|MarkMarkup-configuration|
+integration			|MarkMarkup-integration|
+limitations			|MarkMarkup-limitations|
+known problems			|MarkMarkup-known-problems|
+todo				|MarkMarkup-todo|
+history				|MarkMarkup-history|
+
+==============================================================================
+DESCRIPTION					      *MarkMarkup-description*
+
+This plugin ...
+
+HOW IT WORKS								     *
+
+SOURCE									     *
+(Original Vim tip, Stack Overflow answer, ...)
+
+SEE ALSO								     *
+(Plugins offering complementary functionality, or plugins using this library.)
+
+RELATED WORKS								     *
+(Alternatives from other authors, other approaches, references not used here.)
+
+==============================================================================
+USAGE							    *MarkMarkup-usage*
+								 *:MarkMarkup*
+:MarkMarkup [{format}]	Put markup [in the passed {format}] around each match
+			of any defined |:Mark|s in the current buffer.
+			Formats (e.g. HTML markup) are taken from
+			|g:MarkMarkup_Formats|. If more than one is defined,
+			a valid {format} has to be passed.
+:{N}[,M]MarkMarkup	Like above, but only for the mark(s) with numbers
+			within {N}[,M].
+
+							      *:PutMarkLookup*
+:[line]PutMarkLookup [{format}]
+			Put a lookup table [for {format}] after [line]
+			(default current line). Depending on the format, this
+			could be the optional |:MarkName|s, or color
+			definitions taken from the mark palette. See
+			|g:MarkMarkup_Lookups|.
+
+EXAMPLE							  *MarkMarkup-example*
+
+==============================================================================
+INSTALLATION					     *MarkMarkup-installation*
+
+The code is hosted in a Git repo at https://github.com/inkarkat/vim-MarkMarkup
+You can use your favorite plugin manager, or "git clone" into a directory used
+for Vim |packages|. Releases are on the "stable" branch, the latest unstable
+development snapshot on "master".
+
+This script is also packaged as a |vimball|. If you have the "gunzip"
+decompressor in your PATH, simply edit the *.vmb.gz package in Vim; otherwise,
+decompress the archive first, e.g. using WinZip. Inside Vim, install by
+sourcing the vimball or via the |:UseVimball| command. >
+    vim MarkMarkup*.vmb.gz
+    :so %
+To uninstall, use the |:RmVimball| command.
+
+DEPENDENCIES					     *MarkMarkup-dependencies*
+
+- Requires Vim 7.0 or higher.
+
+==============================================================================
+CONFIGURATION					    *MarkMarkup-configuration*
+
+For a permanent configuration, put the following commands into your |vimrc|:
+				 *g:MarkMarkup_Formats* *b:MarkMarkup_Formats*
+The available markup formats are configured as a Dictionary of {format-name}
+keys mapping to a Funcref that is passed {mark-number}, {palette-entry},
+{mark-name} and should return a List of {prefix}, {suffix}. >
+    let g:MarkMarkup_Formats = {'html': function('MarkToHtml')}
+The global configuration can be overwritten by a buffer-local one.
+
+				 *g:MarkMarkup_Lookups* *b:MarkMarkup_Lookups*
+The available markup lookups are configured as a Dictionary of {format-name}
+keys mapping to a Funcref that is passed {mark-number}, {palette-entry},
+{mark-name} and should return a String or a List. All lookups are then
+concatenated; Strings as-is (without separator), each List element as a
+separate line.
+    let g:MarkMarkup_Lookups = {'html': function('MarkToHtmlLookup')}
+The global configuration can be overwritten by a buffer-local one.
+
+==============================================================================
+LIMITATIONS					      *MarkMarkup-limitations*
+
+KNOWN PROBLEMS					   *MarkMarkup-known-problems*
+
+TODO							     *MarkMarkup-todo*
+
+IDEAS							    *MarkMarkup-ideas*
+
+CONTRIBUTING					       *MarkMarkup-contribute*
+
+Report any bugs, send patches, or suggest features via the issue tracker at
+https://github.com/inkarkat/vim-MarkMarkup/issues or email (address below).
+
+==============================================================================
+HISTORY							  *MarkMarkup-history*
+
+GOAL
+First published version.
+
+0.01	19-Mar-2019
+Started development.
+
+==============================================================================
+Copyright: (C) 2019 Ingo Karkat
+The VIM LICENSE applies to this plugin; see |copyright|.
+
+Maintainer:	Ingo Karkat <ingo@karkat.de>
+==============================================================================
+ vim:tw=78:ts=8:ft=help:norl:
