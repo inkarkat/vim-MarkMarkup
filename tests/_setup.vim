@@ -1,4 +1,5 @@
 call vimtest#AddDependency('vim-ingo-library')
+call vimtest#AddDependency('vim-PatternsOnText')
 call vimtest#AddDependency('vim-mark')
 
 runtime plugin/MarkMarkup.vim
@@ -8,8 +9,12 @@ function! TestLookup( mark ) abort
     return [a:mark.number . ': ' . (empty(a:mark.name) ? a:mark.pattern : a:mark.name)]
 endfunction
 
-function! TestBadLookup( mark ) abort
+function! TestBad( mark ) abort
     return 42 + []
+endfunction
+
+function! TestFormat( mark ) abort
+    return [a:mark.number . '<', '>' . a:mark.number]
 endfunction
 
 function! DefineMarks() abort

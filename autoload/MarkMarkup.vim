@@ -63,8 +63,39 @@ function! s:GetFormat( formats, format ) abort
 endfunction
 
 
+function! MarkMarkup#Formats( markList, arguments ) abort
+    let [l:startIndex, l:endIndex, l:format] = MarkMarkup#Parse(a:markList, a:arguments)
+    let l:marks = MarkMarkup#CollectMarks(a:markList, l:startIndex, l:endIndex)
+
+    let l:FormatsFuncref = s:GetFormat(ingo#plugin#setting#GetBufferLocal('MarkMarkup_Formats'), l:format)
+    return [
+    \   map(copy(l:marks), 'v:val.pattern'),
+    \   map(copy(l:marks), 'call(l:FormatsFuncref, [v:val])')
+    \]
+endfunction
+function! MarkMarkup#PrepareBorderPatterns( patterns ) abort
+    let l:result = []
+    for l:p in a:patterns
+	call add(l:result, '\ze\%(' . l:p . '\)')
+	call add(l:result, '\%(' . l:p . '\)\zs')
+    endfor
+    return l:result
+endfunction
 function! MarkMarkup#Markup( range, arguments ) abort
-    " TODO
+    try
+	let [l:patterns, l:formats] = MarkMarkup#Formats(mark#ToList(), a:arguments)
+	return PatternsOnText#Transactional#ExprEach#TransactionalSubstitute(
+	\   a:range,
+	\   MarkMarkup#PrepareBorderPatterns(l:patterns),
+	\   ingo#collections#Flatten1(l:formats),
+	\   'g', '', '')
+    catch /^MarkMarkup:/
+	call ingo#err#SetCustomException('MarkMarkup')
+	return 0
+    catch
+	call ingo#err#SetVimException()
+	return 0
+    endtry
 endfunction
 
 function! MarkMarkup#Lookup( markList, arguments ) abort
