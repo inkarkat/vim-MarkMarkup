@@ -31,16 +31,15 @@ RELATED WORKS								     *
 ==============================================================================
 USAGE							    *MarkMarkup-usage*
 								 *:MarkMarkup*
-:MarkMarkup [{format}]	Put markup [in the passed {format}] around each match
-			of any defined |:Mark|s in the current buffer.
+:[range]MarkMarkup [N[,M]] [{format}]
+			Put markup [in the passed {format}] around each match
+			of any defined / the mark(s) with numbers [N] to [M]
+			|:Mark|s in the current buffer / within [range].
 			Formats (e.g. HTML markup) are taken from
 			|g:MarkMarkup_Formats|. If more than one is defined,
 			a valid {format} has to be passed.
-:{N}[,M]MarkMarkup	Like above, but only for the mark(s) with numbers
-			within {N}[,M].
-
 							      *:PutMarkLookup*
-:[line]PutMarkLookup [{format}]
+:[line]PutMarkLookup [N[,M]] [{format}]
 			Put a lookup table [for {format}] after [line]
 			(default current line). Depending on the format, this
 			could be the optional |:MarkName|s, or color
