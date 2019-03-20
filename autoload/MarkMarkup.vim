@@ -50,7 +50,11 @@ function! s:GetFormat( formats, format ) abort
     if empty(a:formats)
 	throw 'MarkMarkup: No formats defined'
     elseif empty(a:format)
-	return a:formats[0]
+	if len(a:formats) == 1
+	    return values(a:formats)[0]
+	else
+	    throw 'MarkMarkup: No {format} passed, but multiple defined: ' . join(sort(keys(a:formats)), ', ')
+	endif
     elseif ! has_key(a:formats, a:format)
 	throw 'MarkMarkup: No such format: ' . a:format
     endif
@@ -63,10 +67,9 @@ function! MarkMarkup#Markup( range, arguments ) abort
     " TODO
 endfunction
 
-function! MarkMarkup#Lookup( arguments ) abort
-    let l:markList = mark#ToList()
-    let [l:start, l:end, l:format] = MarkMarkup#Parse(l:markList, a:arguments)
-    let l:marks = MarkMarkup#CollectMarks(l:markList, l:startIndex, l:endIndex)
+function! MarkMarkup#Lookup( markList, arguments ) abort
+    let [l:startIndex, l:endIndex, l:format] = MarkMarkup#Parse(a:markList, a:arguments)
+    let l:marks = MarkMarkup#CollectMarks(a:markList, l:startIndex, l:endIndex)
 
     let l:LookupFuncref = s:GetFormat(ingo#plugin#setting#GetBufferLocal('MarkMarkup_Lookups'), l:format)
     let l:lookups = map(l:marks, 'call(l:LookupFuncref, [v:val])')
@@ -77,7 +80,7 @@ function! MarkMarkup#Lookup( arguments ) abort
 endfunction
 function! MarkMarkup#Put( lnum, arguments ) abort
     try
-	let l:lookup = MarkMarkup#Lookup(a:arguments)
+	let l:lookup = MarkMarkup#Lookup(mark#ToList(), a:arguments)
 
 	call ingo#lines#PutWrapper(a:lnum, 'put', l:lookup)
 	return 1
