@@ -10,8 +10,7 @@
 
 function! MarkMarkup#Parse( markList, arguments ) abort
     if empty(a:markList)
-	call ingo#err#Set('No marks defined')
-	return [-1, -1, '']
+	throw 'MarkMarkup: No marks defined'
     endif
 
     let l:markNum = len(a:markList)
@@ -27,11 +26,9 @@ function! MarkMarkup#Parse( markList, arguments ) abort
 	let l:end = str2nr(l:m) - 1
     endif
     if l:end > l:markNum - 1
-	call ingo#err#Set(printf('Only %d mark%s defined', l:markNum, (l:markNum == 1 ? '' : 's')))
-	return [-1, -1, '']
+	throw 'MarkMarkup: ' . printf('Only %d mark%s defined', l:markNum, (l:markNum == 1 ? '' : 's'))
     elseif l:start > l:end
-	call ingo#err#Set('Bad range')
-	return [-1, -1, '']
+	throw 'MarkMarkup: Bad range'
     endif
 
     return [l:start, l:end, l:format]
