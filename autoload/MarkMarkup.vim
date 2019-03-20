@@ -33,9 +33,49 @@ function! MarkMarkup#Parse( markList, arguments ) abort
 
     return [l:start, l:end, l:format]
 endfunction
-function! MarkMarkup#Markup( range, arguments ) abort
+function! MarkMarkup#CollectMarks( markList, startIndex, endIndex ) abort
+    " TODO
 endfunction
-function! MarkMarkup#Put( range, arguments ) abort
+
+function! s:GetFormat( formats, format ) abort
+    if empty(a:formats)
+	throw 'MarkMarkup: No formats defined'
+    elseif empty(a:format)
+	return a:formats[0]
+    elseif ! has_key(a:formats, a:format)
+	throw 'MarkMarkup: No such format: ' . a:format
+    endif
+
+    return a:formats[a:format]
+endfunction
+
+
+function! MarkMarkup#Markup( range, arguments ) abort
+    " TODO
+endfunction
+
+function! MarkMarkup#Lookup( arguments ) abort
+    let l:markList = mark#ToList()
+    let [l:start, l:end, l:format] = MarkMarkup#Parse(l:markList, a:arguments)
+    let l:marks = MarkMarkup#CollectMarks(l:markList, l:startIndex, l:endIndex)
+
+    let l:LookupFuncref = s:GetFormat(ingo#plugin#setting#GetBufferLocal('MarkMarkup_Lookups'), l:format)
+    let l:lookups = map(l:marks, 'call(l:LookupFuncref, [v:val])')
+    return (type(l:lookups[0]) == type([]) ?
+    \   ingo#collections#Flatten1(l:lookups) :
+    \   join(l:lookups, '')
+    \)
+endfunction
+function! MarkMarkup#Put( lnum, arguments ) abort
+    try
+	let l:lookup = MarkMarkup#Lookup(a:arguments)
+
+	call ingo#lines#PutWrapper(a:lnum, 'put', l:lookup)
+	return 1
+    catch /^MarkMarkup:/
+	call ingo#err#SetCustomException('MarkMarkup')
+	return 0
+    endtry
 endfunction
 
 " vim: set ts=8 sts=4 sw=4 noexpandtab ff=unix fdm=syntax :

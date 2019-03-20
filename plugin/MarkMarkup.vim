@@ -45,9 +45,9 @@ command! -range=% -nargs=* -complete=customlist,MarkMarkupCompleteFunc MarkMarku
 \   if ! MarkMarkup#Markup('<line1>,<line2>', <q-args>) | echoerr ingo#err#Get() | endif
 
 call ingo#plugin#cmdcomplete#MakeListExprCompleteFunc('sort(keys(ingo#plugin#setting#GetBufferLocal("MarkMarkup_Lookups")))', 'PutMarkLookupCompleteFunc')
-command! -range=% -nargs=* -complete=customlist,PutMarkLookupCompleteFunc PutMarkLookup
+command! -range=-1 -nargs=* -complete=customlist,PutMarkLookupCompleteFunc PutMarkLookup
 \   call setline(<line1>, getline(<line1>)) |
-\   if ! MarkMarkup#Put('<line1>,<line2>', <q-args>) | echoerr ingo#err#Get() | endif
+\   if ! MarkMarkup#Put(<line2> == 1 ? <line1> : <line2>, <q-args>) | echoerr ingo#err#Get() | endif
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
