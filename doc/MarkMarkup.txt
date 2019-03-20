@@ -97,8 +97,6 @@ The available markup formats are configured as a Dictionary of {format-name}
 keys mapping to a Funcref that is passed an object with the following
 attributes:
 - number:   the number of the mark, starting with 1
-- palette:  Dict of Vim color attributes (e.g. "bgcolor") and corresponding
-	    values; cp. |mark-palette-define|
 - name:	    the name given to the mark via |:MarkName|, or empty
 - pattern:  the regular expression that defines the mark
 It should return a List of {prefix}, {suffix}. >

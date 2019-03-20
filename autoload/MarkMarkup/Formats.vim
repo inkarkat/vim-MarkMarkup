@@ -9,6 +9,8 @@
 " Maintainer:	Ingo Karkat <ingo@karkat.de>
 
 scriptencoding utf-8
+let s:save_cpo = &cpo
+set cpo&vim
 
 if ! exists('g:MarkMarkup_Symbols')
     let g:MarkMarkup_Symbols = '※†‡✱◇⁂♫¤⁜★฿♠¥§⌘®Ω¶▥×∀✠♣Ψ◌∃∅∮⊙ΔΣ卍Ю℞℠◆☆♪⁑Φ◐'
@@ -16,35 +18,40 @@ endif
 function! s:GetSymbol( number ) abort
     return get(split(ingo#plugin#setting#GetBufferLocal('MarkMarkup_Symbols'), '\zs'), a:number - 1, '?')
 endfunction
-function! s:GetColor( palette, isBackground ) abort
-    let l:what = (a:isBackground ? 'bg' : 'fg')
-    return get(a:palette, 'gui' . l:what, get(a:palette, 'cterm' . l:what, ''))
-endfunction
-function! s:GetStyles( palette ) abort
-    let l:styles = []
-    let l:fgColor = s:GetColor(a:palette, 0)
-    if ! empty(l:fgColor)
-	call add(l:styles, printf('color: %s', l:fgColor))
-    endif
-    let l:bgColor = s:GetColor(a:palette, 1)
-    if ! empty(l:bgColor)
-	call add(l:styles, printf('background-color: %s', l:bgColor))
-    endif
 
-    for l:attribute in split(get(a:palette, 'gui', get(a:palette, 'cterm', get(a:palette, 'term'))), ',')
-	if l:attribute ==# 'bold'
-	    call add(l:styles, 'font-weight: bold')
-	elseif l:attribute ==# 'italic'
-	    call add(l:styles, 'font-style: italic')
-	elseif l:attribute ==# 'underline'
-	    call add(l:styles, 'text-decoration: underline')
-	elseif l:attribute ==# 'strike'
-	    call add(l:styles, 'text-decoration: line-through')
+function! MarkMarkup#Formats#HighlightGroupToStyles( hlGroupName ) abort
+    let l:hlID = synIDtrans(hlID(a:hlGroupName))
+
+    let l:styles = []
+    for [l:what, l:cssAttribute] in [
+    \   ['fg#', 'color'],
+    \   ['bg#', 'background-color'],
+    \   ['font', 'font-family'],
+    \   ['bold', 'font-weight: bold'],
+    \   ['italic', 'font-style: italic'],
+    \   ['underline', 'text-decoration: underline'],
+    \   ['strike', 'text-decoration: line-through']
+    \]
+	let l:attributeValue = synIDattr(l:hlID, l:what, 'gui')
+	if ! empty(l:attributeValue)
+	    call add(l:styles,
+	    \   l:cssAttribute .
+	    \       (l:cssAttribute =~# ':' ?
+	    \           '' :
+	    \           ': ' . (l:attributeValue =~# '\s' ? string(l:attributeValue) : l:attributeValue)
+	    \       )
+	    \)
 	endif
     endfor
-
     return l:styles
 endfunction
+function! MarkMarkup#Formats#HighlightGroupToCSS( hlGroupName, cssClassName ) abort
+    let l:css = [printf('.%s {', a:cssClassName)]
+    let l:css += map(MarkMarkup#Formats#HighlightGroupToStyles(a:hlGroupName), '"    " . v:val . ";"')
+    call add(l:css, '}')
+    return l:css
+endfunction
+
 function! s:NameToTitle( name ) abort
     return printf('title="%s"', substitute(a:name, '"', '&quot;', 'g'))
 endfunction
@@ -63,7 +70,7 @@ function! MarkMarkup#Formats#HtmlFormat( mark ) abort
 	call add(l:attributes, s:NameToTitle(a:mark.name))
     endif
 
-    let l:styles = s:GetStyles(a:mark.palette)
+    let l:styles = MarkMarkup#Formats#HighlightGroupToStyles('MarkWord' . a:mark.number)
     if ! empty(l:styles)
 	call add(l:attributes, printf('style="%s"', join(l:styles, '; ')))
     endif
@@ -80,10 +87,7 @@ function! MarkMarkup#Formats#CssFormat( mark ) abort
     return [printf('<span %s>', join(l:attributes, ' ')), '</span>']
 endfunction
 function! MarkMarkup#Formats#CssLookup( mark ) abort
-    let l:css = [printf('.mark%d {', a:mark.number)]
-    let l:css += map(s:GetStyles(a:mark.palette), 'v:val . ";"')
-    call add(l:css, '}')
-    return l:css
+    return MarkMarkup#Formats#HighlightGroupToCSS('MarkWord' . a:mark.number, 'mark' . a:mark.number)
 endfunction
 
 function! MarkMarkup#Formats#NumberFormat( mark ) abort
@@ -100,4 +104,6 @@ function! MarkMarkup#Formats#SymbolLookup( mark ) abort
     return [s:MakeLegend(s:GetSymbol(a:mark.number), a:mark)]
 endfunction
 
+let &cpo = s:save_cpo
+unlet s:save_cpo
 " vim: set ts=8 sts=4 sw=4 noexpandtab ff=unix fdm=syntax :
