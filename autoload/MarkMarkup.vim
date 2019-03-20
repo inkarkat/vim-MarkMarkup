@@ -33,8 +33,17 @@ function! MarkMarkup#Parse( markList, arguments ) abort
 
     return [l:start, l:end, l:format]
 endfunction
+
+function! s:BuildMarkObject( index, mark ) abort
+    return extend(ingo#dict#Make(a:mark, 'pattern'), {'number': a:index + 1, 'name': ''}, 'keep')
+endfunction
 function! MarkMarkup#CollectMarks( markList, startIndex, endIndex ) abort
-    " TODO
+    return filter(
+    \   map(
+    \       range(a:startIndex, a:endIndex),
+    \       's:BuildMarkObject(v:val, a:markList[v:val])'
+    \   ), '! empty(v:val.pattern)'
+    \)
 endfunction
 
 function! s:GetFormat( formats, format ) abort
