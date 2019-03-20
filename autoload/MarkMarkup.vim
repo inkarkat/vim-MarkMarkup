@@ -74,20 +74,23 @@ function! MarkMarkup#Formats( markList, arguments ) abort
     \]
 endfunction
 function! MarkMarkup#PrepareBorderPatterns( patterns ) abort
-    let l:result = []
-    for l:p in a:patterns
-	call add(l:result, '\ze\%(' . l:p . '\)')
-	call add(l:result, '\%(' . l:p . '\)\zs')
+    return map(a:patterns, '["\\ze\\%(" . v:val . "\\)", "\\%(" . v:val . "\\)\\zs"]')
+endfunction
+function! MarkMarkup#ReshuffleAndFlatten( pairs ) abort
+    let [l:front, l:back] = [[], []]
+    for [l:a, l:b] in a:pairs
+	call add(l:front, l:a)
+	call insert(l:back, l:b)
     endfor
-    return l:result
+    return l:front + l:back
 endfunction
 function! MarkMarkup#Markup( range, arguments ) abort
     try
 	let [l:patterns, l:formats] = MarkMarkup#Formats(mark#ToList(), a:arguments)
 	return PatternsOnText#Transactional#ExprEach#TransactionalSubstitute(
 	\   a:range,
-	\   MarkMarkup#PrepareBorderPatterns(l:patterns),
-	\   ingo#collections#Flatten1(l:formats),
+	\   MarkMarkup#ReshuffleAndFlatten(MarkMarkup#PrepareBorderPatterns(l:patterns)),
+	\   MarkMarkup#ReshuffleAndFlatten(l:formats),
 	\   'g', '', '')
     catch /^MarkMarkup:/
 	call ingo#err#SetCustomException('MarkMarkup')
