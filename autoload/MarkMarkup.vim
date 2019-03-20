@@ -80,12 +80,13 @@ function! MarkMarkup#Lookup( markList, arguments ) abort
 endfunction
 function! MarkMarkup#Put( lnum, arguments ) abort
     try
-	let l:lookup = MarkMarkup#Lookup(mark#ToList(), a:arguments)
-
-	call ingo#lines#PutWrapper(a:lnum, 'put', l:lookup)
+	call ingo#lines#PutWrapper(a:lnum, 'put', MarkMarkup#Lookup(mark#ToList(), a:arguments))
 	return 1
     catch /^MarkMarkup:/
 	call ingo#err#SetCustomException('MarkMarkup')
+	return 0
+    catch
+	call ingo#err#SetVimException()
 	return 0
     endtry
 endfunction
