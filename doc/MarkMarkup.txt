@@ -46,6 +46,26 @@ USAGE							    *MarkMarkup-usage*
 			definitions taken from the mark palette. See
 			|g:MarkMarkup_Lookups|.
 
+							  *MarkMarkup-formats*
+The plugin ships with these default {format}s:
+html			Surrounds the marked text with an HTML <span> tag that
+			reproduces the mark's colors and text attributes. A
+			mark name is rendered as a title attribute, which the
+			browser usually shows on hover.
+
+css			Surrounds the marked text with an HTML <span> tag that
+			works like the html format, but uses "markN" CSS
+			classes. The CSS definitions can be obtained via
+			|:PutMarkLookup| css.
+
+number			Appends a [1], [2], ... counter behind each mark.
+			|:PutMarkLookup| number inserts a legend that maps
+			those numbers to the mark's name or (if unnamed) to
+			the regular expression that defines the mark.
+
+symbol			Like number, but appends a single-character (Unicode)
+			symbol, taken from |g:MarkMarkup_Symbols|.
+
 EXAMPLE							  *MarkMarkup-example*
 
 ==============================================================================
@@ -74,19 +94,28 @@ CONFIGURATION					    *MarkMarkup-configuration*
 For a permanent configuration, put the following commands into your |vimrc|:
 				 *g:MarkMarkup_Formats* *b:MarkMarkup_Formats*
 The available markup formats are configured as a Dictionary of {format-name}
-keys mapping to a Funcref that is passed {mark-number}, {palette-entry},
-{mark-name} and should return a List of {prefix}, {suffix}. >
+keys mapping to a Funcref that is passed an object with the following
+attributes:
+- number:   the number of the mark, starting with 1
+- palette:  Dict of Vim color attributes (e.g. "bgcolor") and corresponding
+	    values; cp. |mark-palette-define|
+- name:	    the name given to the mark via |:MarkName|, or empty
+- pattern:  the regular expression that defines the mark
+It should return a List of {prefix}, {suffix}. >
     let g:MarkMarkup_Formats = {'html': function('MarkToHtml')}
 The global configuration can be overwritten by a buffer-local one.
 
 				 *g:MarkMarkup_Lookups* *b:MarkMarkup_Lookups*
 The available markup lookups are configured as a Dictionary of {format-name}
-keys mapping to a Funcref that is passed {mark-number}, {palette-entry},
-{mark-name} and should return a String or a List. All lookups are then
-concatenated; Strings as-is (without separator), each List element as a
-separate line.
+keys mapping to a Funcref (like above). Here, it should return a String or a
+List. All lookups are then concatenated; Strings as-is (without separator),
+each List element as a separate line. >
     let g:MarkMarkup_Lookups = {'html': function('MarkToHtmlLookup')}
 The global configuration can be overwritten by a buffer-local one.
+
+				 *g:MarkMarkup_Symbols* *b:MarkMarkup_Symbols*
+String of (single-character) symbols to be used (from left to right) for the
+default "symbol" format.
 
 ==============================================================================
 LIMITATIONS					      *MarkMarkup-limitations*
