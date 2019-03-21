@@ -6,7 +6,6 @@ description			|MarkMarkup-description|
 usage				|MarkMarkup-usage|
 installation			|MarkMarkup-installation|
 configuration			|MarkMarkup-configuration|
-integration			|MarkMarkup-integration|
 limitations			|MarkMarkup-limitations|
 known problems			|MarkMarkup-known-problems|
 todo				|MarkMarkup-todo|
@@ -33,8 +32,8 @@ USAGE							    *MarkMarkup-usage*
 								 *:MarkMarkup*
 :[range]MarkMarkup [N[,M]] [{format}]
 			Put markup [in the passed {format}] around each match
-			of any defined / the mark(s) with numbers [N] to [M]
-			|:Mark|s in the current buffer / within [range].
+			of any defined |:Mark| / the mark(s) with numbers [N]
+			to [M], in the current buffer / within [range].
 			Formats (e.g. HTML markup) are taken from
 			|g:MarkMarkup_Formats|. If more than one is defined,
 			a valid {format} has to be passed.
@@ -42,9 +41,9 @@ USAGE							    *MarkMarkup-usage*
 :[line]PutMarkLookup [N[,M]] [{format}]
 			Put a lookup table [for {format}] after [line]
 			(default current line). Depending on the format, this
-			could be the optional |:MarkName|s, or color
-			definitions taken from the mark palette. See
-			|g:MarkMarkup_Lookups|.
+			could be the optional |:MarkName|s, or text attributes
+			and color definitions taken from the mark
+			highlightings. See |g:MarkMarkup_Lookups|.
 
 							  *MarkMarkup-formats*
 The plugin ships with these default {format}s:
@@ -55,18 +54,17 @@ html			Surrounds the marked text with an HTML <span> tag that
 
 css			Surrounds the marked text with an HTML <span> tag that
 			works like the html format, but uses "markN" CSS
-			classes. The CSS definitions can be obtained via
-			|:PutMarkLookup| css.
+			classes. The CSS definitions can be obtained via >
+			    :PutMarkLookup css
 
-number			Appends a [1], [2], ... counter behind each mark.
-			|:PutMarkLookup| number inserts a legend that maps
-			those numbers to the mark's name or (if unnamed) to
-			the regular expression that defines the mark.
+number			Appends a [1], [2], ... counter behind each mark. >
+			    :PutMarkLookup number
+<			inserts a legend that maps those numbers to the mark's
+			name or (if unnamed) to the regular expression that
+			defines the mark.
 
 symbol			Like number, but appends a single-character (Unicode)
 			symbol, taken from |g:MarkMarkup_Symbols|.
-
-EXAMPLE							  *MarkMarkup-example*
 
 ==============================================================================
 INSTALLATION					     *MarkMarkup-installation*
@@ -87,15 +85,19 @@ To uninstall, use the |:RmVimball| command.
 DEPENDENCIES					     *MarkMarkup-dependencies*
 
 - Requires Vim 7.0 or higher.
+- Requires the |ingo-library.vim| plugin (vimscript #4433), version 1.037 or
+  higher.
+- Requires the |Mark.vim| plugin (vimscript #2666), version 3.0.0 or higher.
+- Requires the |PatternsOnText.vim| plugin (vimscript #4602), version 2.11 or
+  higher.
 
 ==============================================================================
 CONFIGURATION					    *MarkMarkup-configuration*
 
 For a permanent configuration, put the following commands into your |vimrc|:
 				 *g:MarkMarkup_Formats* *b:MarkMarkup_Formats*
-The available markup formats are configured as a Dictionary of {format-name}
-keys mapping to a Funcref that is passed an object with the following
-attributes:
+The available markup formats are configured as a Dictionary of {format} keys
+mapping to a Funcref that is passed an object with the following attributes:
 - number:   the number of the mark, starting with 1
 - name:	    the name given to the mark via |:MarkName|, or empty
 - pattern:  the regular expression that defines the mark
