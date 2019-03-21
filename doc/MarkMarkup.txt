@@ -20,8 +20,7 @@ kind of markup can be configured, and the plugin ships with predefined formats
 that use <span> tags (if you want to render the text as HTML) to reproduce the
 original mark colors, or append numbers[1] or symbols※. For the latter, a
 legend listing all used marks and their names or patterns can be added to the
-buffer as well.
-[1] Example    ※: \<s\w\+s\> ~
+buffer as well.					  [1] Example    ※: \<s\w\+s\>
 
 SEE ALSO								     *
 
@@ -107,7 +106,7 @@ DEPENDENCIES					     *MarkMarkup-dependencies*
 - Requires Vim 7.0 or higher.
 - Requires the |ingo-library.vim| plugin (vimscript #4433), version 1.037 or
   higher.
-- Requires the |Mark.vim| plugin (vimscript #2666), version 3.0.0 or higher.
+- Requires the |mark.vim| plugin (vimscript #2666), version 3.0.0 or higher.
 - Requires the |PatternsOnText.vim| plugin (vimscript #4602), version 2.11 or
   higher.
 
