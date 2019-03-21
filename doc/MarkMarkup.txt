@@ -51,20 +51,38 @@ html			Surrounds the marked text with an HTML <span> tag that
 			reproduces the mark's colors and text attributes. A
 			mark name is rendered as a title attribute, which the
 			browser usually shows on hover.
+	<span style="color: #001e80; background-color: #a1b7ff">Lorem</span> ~
+	<span title="latin" style="color: #80005d; background-color: #ffa1c6">ipsum</span> ~
 
 css			Surrounds the marked text with an HTML <span> tag that
 			works like the html format, but uses "markN" CSS
-			classes. The CSS definitions can be obtained via >
+			classes.
+	<span class="mark1">Lorem</span> <span class="mark2" title="latin">ipsum</span> ~
+			The CSS definitions can be obtained via >
 			    :PutMarkLookup css
+<	.mark1 { ~
+	    color: #001e80; ~
+	    background-color: #a1b7ff; ~
+	} ~
+	.mark2 { ~
+	    color: #80005d; ~
+	    background-color: #ffa1c6; ~
+	} ~
 
-number			Appends a [1], [2], ... counter behind each mark. >
-			    :PutMarkLookup number
-<			inserts a legend that maps those numbers to the mark's
+number			Appends a [1], [2], ... counter behind each mark.
+			Lorem[1] ipsum[2] ~
+			A legend that maps those numbers to the mark's
 			name or (if unnamed) to the regular expression that
-			defines the mark.
+			defines the mark can be inserted via >
+			    :PutMarkLookup number
+<			[1]: \<Lorem\> ~
+			[2]: latin ~
 
 symbol			Like number, but appends a single-character (Unicode)
 			symbol, taken from |g:MarkMarkup_Symbols|.
+			Lorem※ ipsum† ~
+			※: \<Lorem\> ~
+			†: latin ~
 
 ==============================================================================
 INSTALLATION					     *MarkMarkup-installation*
