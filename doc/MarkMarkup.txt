@@ -47,8 +47,8 @@ USAGE							    *MarkMarkup-usage*
 			and color definitions taken from the mark
 			highlightings. See |g:MarkMarkup_Lookups|.
 
-							  *MarkMarkup-formats*
 The plugin ships with these default {format}s:
+							  *MarkMarkup-formats*
 html			Surrounds the marked text with an HTML <span> tag that
 			reproduces the mark's colors and text attributes. A
 			mark name is rendered as a title attribute, which the
@@ -60,7 +60,7 @@ css			Surrounds the marked text with an HTML <span> tag that
 			works like the html format, but uses "markN" CSS
 			classes.
 	<span class="mark1">Lorem</span> <span class="mark2" title="latin">ipsum</span> ~
-			The CSS definitions can be obtained via >
+			The corresponding CSS definitions can be obtained via >
 			    :PutMarkLookup css
 <	.mark1 { ~
 	    color: #001e80; ~
@@ -115,7 +115,7 @@ DEPENDENCIES					     *MarkMarkup-dependencies*
 CONFIGURATION					    *MarkMarkup-configuration*
 
 For a permanent configuration, put the following commands into your |vimrc|:
-				 *g:MarkMarkup_Formats* *b:MarkMarkup_Formats*
+				 *b:MarkMarkup_Formats* *g:MarkMarkup_Formats*
 The available markup formats are configured as a Dictionary of {format} keys
 mapping to a Funcref that is passed an object with the following attributes:
 - number:   the number of the mark, starting with 1
@@ -125,7 +125,7 @@ It should return a List of {prefix}, {suffix}. >
     let g:MarkMarkup_Formats = {'html': function('MarkToHtml')}
 The global configuration can be overwritten by a buffer-local one.
 
-				 *g:MarkMarkup_Lookups* *b:MarkMarkup_Lookups*
+				 *b:MarkMarkup_Lookups* *g:MarkMarkup_Lookups*
 The available markup lookups are configured as a Dictionary of {format-name}
 keys mapping to a Funcref (like above). Here, it should return a String or a
 List. All lookups are then concatenated; Strings as-is (without separator),
@@ -133,7 +133,7 @@ each List element as a separate line. >
     let g:MarkMarkup_Lookups = {'html': function('MarkToHtmlLookup')}
 The global configuration can be overwritten by a buffer-local one.
 
-				 *g:MarkMarkup_Symbols* *b:MarkMarkup_Symbols*
+				 *b:MarkMarkup_Symbols* *g:MarkMarkup_Symbols*
 String of (single-character) symbols to be used (from left to right) for the
 default "symbol" format.
 
