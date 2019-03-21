@@ -58,8 +58,8 @@ endfunction
 function! s:FormatNumber( mark ) abort
     return printf('[%d]', a:mark.number)
 endfunction
-function! s:MakeLegend( element, mark ) abort
-    return printf('%s: %s', a:element, empty(a:mark.name) ? a:mark.pattern : a:mark.name)
+function! s:MakeLegend( element, separator, mark ) abort
+    return a:element . a:separator . (empty(a:mark.name) ? a:mark.pattern : a:mark.name)
 endfunction
 
 
@@ -94,14 +94,14 @@ function! MarkMarkup#Formats#NumberFormat( mark ) abort
     return ['', s:FormatNumber(a:mark)]
 endfunction
 function! MarkMarkup#Formats#NumberLookup( mark ) abort
-    return [s:MakeLegend(s:FormatNumber(a:mark), a:mark)]
+    return [s:MakeLegend(s:FormatNumber(a:mark), ' ', a:mark)]
 endfunction
 
 function! MarkMarkup#Formats#SymbolFormat( mark ) abort
     return ['', s:GetSymbol(a:mark.number)]
 endfunction
 function! MarkMarkup#Formats#SymbolLookup( mark ) abort
-    return [s:MakeLegend(s:GetSymbol(a:mark.number), a:mark)]
+    return [s:MakeLegend(s:GetSymbol(a:mark.number), ': ', a:mark)]
 endfunction
 
 let &cpo = s:save_cpo

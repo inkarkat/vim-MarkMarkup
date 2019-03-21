@@ -75,8 +75,8 @@ number			Appends a [1], [2], ... counter behind each mark.
 			name or (if unnamed) to the regular expression that
 			defines the mark can be inserted via >
 			    :PutMarkLookup number
-<			[1]: \<Lorem\> ~
-			[2]: latin ~
+<			[1] \<Lorem\> ~
+			[2] latin ~
 
 symbol			Like number, but appends a single-character (Unicode)
 			symbol, taken from |g:MarkMarkup_Symbols|.
