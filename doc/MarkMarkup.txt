@@ -14,18 +14,20 @@ history				|MarkMarkup-history|
 ==============================================================================
 DESCRIPTION					      *MarkMarkup-description*
 
-This plugin ...
-
-HOW IT WORKS								     *
-
-SOURCE									     *
-(Original Vim tip, Stack Overflow answer, ...)
+This plugin enables you to persist the highlightings you've added to text via
+the |mark.vim| plugin (vimscript #2666) as markup directly in the text. Any
+kind of markup can be configured, and the plugin ships with predefined formats
+that use <span> tags (if you want to render the text as HTML) to reproduce the
+original mark colors, or append numbers[1] or symbols※. For the latter, a
+legend listing all used marks and their names or patterns can be added to the
+buffer as well.
+[1] Example    ※: \<s\w\+s\> ~
 
 SEE ALSO								     *
-(Plugins offering complementary functionality, or plugins using this library.)
 
-RELATED WORKS								     *
-(Alternatives from other authors, other approaches, references not used here.)
+- ExtractLinks.vim (vimscript #4870) uses a regular expression instead of
+  marked text to identify text. Instead of appending the label, it replaces
+  the text with it, and then collects references for use in a legend.
 
 ==============================================================================
 USAGE							    *MarkMarkup-usage*
