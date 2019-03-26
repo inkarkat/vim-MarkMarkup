@@ -79,8 +79,8 @@ endfunction
 function! MarkMarkup#ReshuffleAndFlatten( pairs ) abort
     let [l:front, l:back] = [[], []]
     for [l:a, l:b] in a:pairs
-	call add(l:front, l:a)
-	call insert(l:back, l:b)
+	call insert(l:front, l:a)
+	call add(l:back, l:b)
     endfor
     return l:front + l:back
 endfunction
