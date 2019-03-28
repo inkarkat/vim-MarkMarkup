@@ -5,13 +5,13 @@ _by Ingo Karkat_
 DESCRIPTION
 ------------------------------------------------------------------------------
 
-This plugin enables you to persist the highlightings you've added to text via
-the mark.vim plugin ([vimscript #2666](http://www.vim.org/scripts/script.php?script_id=2666)) as markup directly in the text. Any
+This plugin can persist the highlightings you've added to text via the
+mark.vim plugin ([vimscript #2666](http://www.vim.org/scripts/script.php?script_id=2666)) as markup - directly inside the text. Any
 kind of markup can be configured, and the plugin ships with predefined formats
-that use &lt;span&gt; tags (if you want to render the text as HTML) to reproduce the
-original mark colors, or append numbers[1] or symbols※. For the latter, a
-legend listing all used marks and their names or patterns can be added to the
-buffer as well.                                   [1] Example    ※: \\&lt;s\\w\\+s\\&gt;
+that use &lt;span&gt; tags (to render the text as HTML) in order to reproduce the
+original mark colors. Other formats append numbers[1] or symbols※, and
+additionally a legend listing all used marks and their names or patterns can
+be added to the buffer, too.                         [1] Example ※: \\&lt;s\\w\\+s\\&gt;
 
 ### SEE ALSO
 
@@ -113,17 +113,17 @@ mapping to a Funcref that is passed an object with the following attributes:
 - number:   the number of the mark, starting with 1
 - name:     the name given to the mark via :MarkName, or empty
 - pattern:  the regular expression that defines the mark
-It should return a List of {prefix}, {suffix}.
+It should return a List of [{prefix}, {suffix}].
  <!-- -->
 
     let g:MarkMarkup_Formats = {'html': function('MarkToHtml')}
 
 The global configuration can be overwritten by a buffer-local one.
 
-The available markup lookups are configured as a Dictionary of {format-name}
-keys mapping to a Funcref (like above). Here, it should return a String or a
-List. All lookups are then concatenated; Strings as-is (without separator),
-each List element as a separate line.
+The available markup lookups are configured as a Dictionary of {format} keys
+mapping to a Funcref (like above). Here, it should return a String or a List.
+All lookups are then concatenated; Strings as-is (without separator), each
+List element as a separate line.
 
     let g:MarkMarkup_Lookups = {'html': function('MarkToHtmlLookup')}
 
