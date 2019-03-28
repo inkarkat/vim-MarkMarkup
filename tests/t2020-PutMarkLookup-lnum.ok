@@ -1,0 +1,8 @@
+foo is strong in me and you. I love eagles and rabbits, but pigs are filthy.
+pig-you-foo-me
+fox or foony and foo
+EOF
+1: \<foo\>
+2: animals
+3: \<you\>\|\<me\>
+5: ^EOF$
