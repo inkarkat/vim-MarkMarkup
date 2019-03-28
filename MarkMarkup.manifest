@@ -1,0 +1,4 @@
+autoload/MarkMarkup.vim
+autoload/MarkMarkup/Formats.vim
+plugin/MarkMarkup.vim
+doc/MarkMarkup.txt
