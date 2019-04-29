@@ -141,8 +141,11 @@ https://github.com/inkarkat/vim-MarkMarkup/issues or email (address below).
 HISTORY
 ------------------------------------------------------------------------------
 
-##### GOAL
-First published version.
+##### 1.01    RELEASEME
+- FIX: Don't error when (individual or even all) mark(s) do not match.
+
+##### 1.00    28-Mar-2019
+- First published version.
 
 ##### 0.01    19-Mar-2019
 - Started development.

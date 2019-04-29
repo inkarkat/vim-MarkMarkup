@@ -91,7 +91,7 @@ function! MarkMarkup#Markup( range, arguments ) abort
 	\   a:range,
 	\   MarkMarkup#ReshuffleAndFlatten(MarkMarkup#PrepareBorderPatterns(l:patterns)),
 	\   MarkMarkup#ReshuffleAndFlatten(l:formats),
-	\   'g', '', '')
+	\   'ge', '', '')
     catch /^MarkMarkup:/
 	call ingo#err#SetCustomException('MarkMarkup')
 	return 0
