@@ -1,11 +1,13 @@
 " Test :MarkMarkup errors.
 
 edit input.txt
-call DefineMarks()
 
 call vimtest#StartTap()
-call vimtap#Plan(2)
+call vimtap#Plan(3)
 
+call vimtap#err#Errors('No marks defined', 'MarkMarkup', 'no marks defined')
+
+call DefineMarks()
 let g:MarkMarkup_Formats = {}
 call vimtap#err#Errors('No formats defined', 'MarkMarkup', 'no configured lookups')
 
