@@ -143,6 +143,9 @@ HISTORY
 
 ##### 1.01    RELEASEME
 - FIX: Don't error when (individual or even all) mark(s) do not match.
+- BUG: If a mark consists of multiple branches and one branch match is
+  contained in another, only the contained match gets the suffix; the
+  containing text gets a prefix, but no suffix.
 
 ##### 1.00    28-Mar-2019
 - First published version.

@@ -46,6 +46,24 @@ function! MarkMarkup#CollectMarks( markList, startIndex, endIndex ) abort
     \)
 endfunction
 
+function! s:UpdatePattern( mark, pattern ) abort
+    let l:result = copy(a:mark)
+    let l:result.pattern = a:pattern
+    return l:result
+endfunction
+function! MarkMarkup#ExpandMarkBranches( marks ) abort
+    let l:expandedMarks = []
+    for l:mark in a:marks
+	let l:branches = ingo#regexp#split#TopLevelBranches(l:mark.pattern)
+	if len(l:branches) > 1
+	    call extend(l:expandedMarks, map(l:branches, 's:UpdatePattern(l:mark, v:val)'))
+	else
+	    call add(l:expandedMarks, l:mark)
+	endif
+    endfor
+    return l:expandedMarks
+endfunction
+
 function! s:GetFormat( formats, format ) abort
     if empty(a:formats)
 	throw 'MarkMarkup: No formats defined'
@@ -66,6 +84,7 @@ endfunction
 function! MarkMarkup#Formats( markList, arguments ) abort
     let [l:startIndex, l:endIndex, l:format] = MarkMarkup#Parse(a:markList, a:arguments)
     let l:marks = MarkMarkup#CollectMarks(a:markList, l:startIndex, l:endIndex)
+    let l:marks = MarkMarkup#ExpandMarkBranches(l:marks)
 
     let l:FormatsFuncref = s:GetFormat(ingo#plugin#setting#GetBufferLocal('MarkMarkup_Formats'), l:format)
     return [
