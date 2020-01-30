@@ -141,6 +141,10 @@ https://github.com/inkarkat/vim-MarkMarkup/issues or email (address below).
 HISTORY
 ------------------------------------------------------------------------------
 
+##### 1.02    RELEASEME
+- Adapt: :PutMarkLookup needs to check &lt;count&gt; == -1 instead of &lt;line2&gt; to
+  support current line as well as a lnum of 0 (since Vim 8.1.1241).
+
 ##### 1.01    01-May-2019
 - FIX: Don't error when (individual or even all) mark(s) do not match.
 - BUG: If a mark consists of multiple branches and one branch match is
@@ -154,7 +158,7 @@ HISTORY
 - Started development.
 
 ------------------------------------------------------------------------------
-Copyright: (C) 2019 Ingo Karkat -
+Copyright: (C) 2019-2020 Ingo Karkat -
 The [VIM LICENSE](http://vimdoc.sourceforge.net/htmldoc/uganda.html#license) applies to this plugin.
 
 Maintainer:     Ingo Karkat &lt;ingo@karkat.de&gt;
