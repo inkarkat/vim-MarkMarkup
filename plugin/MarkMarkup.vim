@@ -19,7 +19,7 @@ set cpo&vim
 "- configuration ---------------------------------------------------------------
 
 if ! exists('g:MarkMarkup_Formats')
-    if v:version < 702 | runtime autoload/MarkMarkupFormats.vim | endif  " The Funcref doesn't trigger the autoload in older Vim versions.
+    if v:version < 702 | runtime autoload/MarkMarkup/Formats.vim | endif  " The Funcref doesn't trigger the autoload in older Vim versions.
     let g:MarkMarkup_Formats = {
     \   'html': function('MarkMarkup#Formats#HtmlFormat'),
     \   'css': function('MarkMarkup#Formats#CssFormat'),
@@ -28,7 +28,7 @@ if ! exists('g:MarkMarkup_Formats')
     \}
 endif
 if ! exists('g:MarkMarkup_Lookups')
-    if v:version < 702 | runtime autoload/MarkMarkupFormats.vim | endif  " The Funcref doesn't trigger the autoload in older Vim versions.
+    if v:version < 702 | runtime autoload/MarkMarkup/Formats.vim | endif  " The Funcref doesn't trigger the autoload in older Vim versions.
     let g:MarkMarkup_Lookups = {
     \   'css': function('MarkMarkup#Formats#CssLookup'),
     \   'number': function('MarkMarkup#Formats#NumberLookup'),

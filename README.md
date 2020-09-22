@@ -144,6 +144,7 @@ HISTORY
 ##### 1.02    RELEASEME
 - Adapt: :PutMarkLookup needs to check &lt;count&gt; == -1 instead of &lt;line2&gt; to
   support current line as well as a lnum of 0 (since Vim 8.1.1241).
+- Compatibility: FIX: Correct autoloading for Vim 7.0/1.
 
 ##### 1.01    01-May-2019
 - FIX: Don't error when (individual or even all) mark(s) do not match.
