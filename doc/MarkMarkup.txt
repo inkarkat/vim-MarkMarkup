@@ -107,7 +107,7 @@ DEPENDENCIES					     *MarkMarkup-dependencies*
 - Requires the |ingo-library.vim| plugin (vimscript #4433), version 1.037 or
   higher.
 - Requires the |mark.vim| plugin (vimscript #2666), version 3.0.0 or higher.
-- Requires the |PatternsOnText.vim| plugin (vimscript #4602), version 2.11 or
+- Requires the |PatternsOnText.vim| plugin (vimscript #4602), version 2.20 or
   higher.
 
 ==============================================================================
@@ -157,6 +157,8 @@ HISTORY							  *MarkMarkup-history*
 - Adapt: :PutMarkLookup needs to check <count> == -1 instead of <line2> to
   support current line as well as a lnum of 0 (since Vim 8.1.1241).
 - Compatibility: FIX: Correct autoloading for Vim 7.0/1.
+- :MarkMarkup: Don't clobber the search history with the last mark's pattern.
+  *** You need to update to PatternsOnText.vim (vimscript #4602) version 2.20! ***
 
 1.01	01-May-2019
 - FIX: Don't error when (individual or even all) mark(s) do not match.
@@ -171,7 +173,7 @@ First published version.
 Started development.
 
 ==============================================================================
-Copyright: (C) 2019-2020 Ingo Karkat
+Copyright: (C) 2019-2022 Ingo Karkat
 The VIM LICENSE applies to this plugin; see |copyright|.
 
 Maintainer:	Ingo Karkat <ingo@karkat.de>
