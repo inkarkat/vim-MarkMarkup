@@ -3,7 +3,7 @@
 " DEPENDENCIES:
 "   - ingo-library.vim plugin
 "
-" Copyright: (C) 2019 Ingo Karkat
+" Copyright: (C) 2019-2022 Ingo Karkat
 "   The VIM LICENSE applies to this script; see ':help copyright'.
 "
 " Maintainer:	Ingo Karkat <ingo@karkat.de>
@@ -105,12 +105,18 @@ function! MarkMarkup#ReshuffleAndFlatten( pairs ) abort
 endfunction
 function! MarkMarkup#Markup( range, arguments ) abort
     try
+	let l:keeppatterns = matchstr(ingo#compat#commands#keeppatterns(), '^keeppatterns$')
 	let [l:patterns, l:formats] = MarkMarkup#Formats(mark#ToList(), a:arguments)
 	return PatternsOnText#Transactional#ExprEach#TransactionalSubstitute(
+	\   l:keeppatterns,
 	\   a:range,
 	\   MarkMarkup#ReshuffleAndFlatten(MarkMarkup#PrepareBorderPatterns(l:patterns)),
 	\   MarkMarkup#ReshuffleAndFlatten(l:formats),
 	\   'ge', '', '')
+
+	if empty(l:keeppatterns)
+	    call histdel('search', -1)
+	endif
     catch /^MarkMarkup:/
 	call ingo#err#SetCustomException('MarkMarkup')
 	return 0

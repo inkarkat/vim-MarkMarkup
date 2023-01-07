@@ -3,7 +3,7 @@
 " DEPENDENCIES:
 "   - ingo-library.vim plugin
 "
-" Copyright: (C) 2019 Ingo Karkat
+" Copyright: (C) 2019-2020 Ingo Karkat
 "   The VIM LICENSE applies to this script; see ':help copyright'.
 "
 " Maintainer:	Ingo Karkat <ingo@karkat.de>
@@ -19,7 +19,7 @@ set cpo&vim
 "- configuration ---------------------------------------------------------------
 
 if ! exists('g:MarkMarkup_Formats')
-    if v:version < 702 | runtime autoload/MarkMarkupFormats.vim | endif  " The Funcref doesn't trigger the autoload in older Vim versions.
+    if v:version < 702 | runtime autoload/MarkMarkup/Formats.vim | endif  " The Funcref doesn't trigger the autoload in older Vim versions.
     let g:MarkMarkup_Formats = {
     \   'html': function('MarkMarkup#Formats#HtmlFormat'),
     \   'css': function('MarkMarkup#Formats#CssFormat'),
@@ -28,7 +28,7 @@ if ! exists('g:MarkMarkup_Formats')
     \}
 endif
 if ! exists('g:MarkMarkup_Lookups')
-    if v:version < 702 | runtime autoload/MarkMarkupFormats.vim | endif  " The Funcref doesn't trigger the autoload in older Vim versions.
+    if v:version < 702 | runtime autoload/MarkMarkup/Formats.vim | endif  " The Funcref doesn't trigger the autoload in older Vim versions.
     let g:MarkMarkup_Lookups = {
     \   'css': function('MarkMarkup#Formats#CssLookup'),
     \   'number': function('MarkMarkup#Formats#NumberLookup'),
@@ -47,7 +47,7 @@ command! -range=% -nargs=* -complete=customlist,MarkMarkupCompleteFunc MarkMarku
 call ingo#plugin#cmdcomplete#MakeListExprCompleteFunc('sort(keys(ingo#plugin#setting#GetBufferLocal("MarkMarkup_Lookups")))', 'PutMarkLookupCompleteFunc')
 command! -range=-1 -nargs=* -complete=customlist,PutMarkLookupCompleteFunc PutMarkLookup
 \   call setline(<line1>, getline(<line1>)) |
-\   if ! MarkMarkup#Put(<line2> == 1 ? <line1> : <line2>, <q-args>) | echoerr ingo#err#Get() | endif
+\   if ! MarkMarkup#Put(<count> == -1 ? <line1> : <line2>, <q-args>) | echoerr ingo#err#Get() | endif
 
 let &cpo = s:save_cpo
 unlet s:save_cpo

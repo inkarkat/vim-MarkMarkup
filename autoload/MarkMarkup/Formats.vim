@@ -3,7 +3,7 @@
 " DEPENDENCIES:
 "   - ingo-library.vim plugin
 "
-" Copyright: (C) 2019 Ingo Karkat
+" Copyright: (C) 2019-2022 Ingo Karkat
 "   The VIM LICENSE applies to this script; see ':help copyright'.
 "
 " Maintainer:	Ingo Karkat <ingo@karkat.de>
@@ -13,7 +13,7 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 if ! exists('g:MarkMarkup_Symbols')
-    let g:MarkMarkup_Symbols = '※†‡✱◇⁂♫¤⁜★฿♠¥§⌘®Ω¶▥×∀✠♣Ψ◌∃∅∮⊙ΔΣ卍Ю℞℠◆☆♪⁑Φ◐'
+    let g:MarkMarkup_Symbols = '※†‡✱◇⁂♫¤❇⁜★฿♠¥✪§⌘Ω¶▥×∀✠♣Ψ◌∃∅∮⌗⊙ΔΣ卍Ю❀℞◆☆♪⁑Φ▤◐⌬⚝☣❖⎆⏚⌀⍭'
 endif
 function! s:GetSymbol( number ) abort
     return get(split(ingo#plugin#setting#GetBufferLocal('MarkMarkup_Symbols'), '\zs'), a:number - 1, '?')
