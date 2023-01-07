@@ -143,7 +143,7 @@ https://github.com/inkarkat/vim-MarkMarkup/issues or email (address below).
 HISTORY
 ------------------------------------------------------------------------------
 
-##### 1.02    RELEASEME
+##### 1.02    07-Jan-2023
 - Adapt: :PutMarkLookup needs to check &lt;count&gt; == -1 instead of &lt;line2&gt; to
   support current line as well as a lnum of 0 (since Vim 8.1.1241).
 - Compatibility: FIX: Correct autoloading for Vim 7.0/1.
