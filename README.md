@@ -113,8 +113,8 @@ mapping to a Funcref that is passed an object with the following attributes:
 - number:   the number of the mark, starting with 1
 - name:     the name given to the mark via :MarkName, or empty
 - pattern:  the regular expression that defines the mark
+
 It should return a List of [{prefix}, {suffix}].
- <!-- -->
 
     let g:MarkMarkup_Formats = {'html': function('MarkToHtml')}
 
@@ -131,6 +131,8 @@ The global configuration can be overwritten by a buffer-local one.
 
 String of (single-character) symbols to be used (from left to right) for the
 default "symbol" format.
+
+    let g:MarkMarkup_Symbols = '※†‡…'
 
 CONTRIBUTING
 ------------------------------------------------------------------------------
@@ -162,7 +164,7 @@ __You need to update to PatternsOnText.vim ([vimscript #4602](http://www.vim.org
 - Started development.
 
 ------------------------------------------------------------------------------
-Copyright: (C) 2019-2022 Ingo Karkat -
+Copyright: (C) 2019-2023 Ingo Karkat -
 The [VIM LICENSE](http://vimdoc.sourceforge.net/htmldoc/uganda.html#license) applies to this plugin.
 
 Maintainer:     Ingo Karkat &lt;ingo@karkat.de&gt;

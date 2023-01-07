@@ -134,8 +134,9 @@ The global configuration can be overwritten by a buffer-local one.
 
 				 *b:MarkMarkup_Symbols* *g:MarkMarkup_Symbols*
 String of (single-character) symbols to be used (from left to right) for the
-default "symbol" format.
-
+default "symbol" format. >
+    let g:MarkMarkup_Symbols = '※†‡…'
+<
 ==============================================================================
 LIMITATIONS					      *MarkMarkup-limitations*
 
@@ -173,7 +174,7 @@ First published version.
 Started development.
 
 ==============================================================================
-Copyright: (C) 2019-2022 Ingo Karkat
+Copyright: (C) 2019-2023 Ingo Karkat
 The VIM LICENSE applies to this plugin; see |copyright|.
 
 Maintainer:	Ingo Karkat <ingo@karkat.de>
