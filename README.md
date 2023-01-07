@@ -113,6 +113,7 @@ mapping to a Funcref that is passed an object with the following attributes:
 - number:   the number of the mark, starting with 1
 - name:     the name given to the mark via :MarkName, or empty
 - pattern:  the regular expression that defines the mark
+
 It should return a List of [{prefix}, {suffix}].
  <!-- -->
 
