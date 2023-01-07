@@ -133,6 +133,8 @@ The global configuration can be overwritten by a buffer-local one.
 String of (single-character) symbols to be used (from left to right) for the
 default "symbol" format.
 
+    let g:MarkMarkup_Symbols = '※†‡…'
+
 CONTRIBUTING
 ------------------------------------------------------------------------------
 
